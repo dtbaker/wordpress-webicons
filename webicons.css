@@ -454,6 +454,18 @@
 .svg .webicon.linkedin {
   background: url("webicons/webicon-linkedin.svg"); }
 
+.no-svg .webicon.mac {
+  background: url("webicons/webicon-mac-m.png"); }
+
+.no-svg .webicon.mac.large {
+  background: url("webicons/webicon-mac.png"); }
+
+.no-svg .webicon.mac.small {
+  background: url("webicons/webicon-mac-s.png"); }
+
+.svg .webicon.mac {
+  background: url("webicons/webicon-mac.svg"); }
+
 .no-svg .webicon.mail {
   background: url("webicons/webicon-mail-m.png"); }
 
