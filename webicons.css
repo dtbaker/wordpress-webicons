@@ -730,6 +730,18 @@
 .svg .webicon.svn {
   background: url("webicons/webicon-svn.svg"); }
 
+.no-svg .webicon.svtle {
+  background: url("webicons/webicon-svtle-m.png"); }
+
+.no-svg .webicon.svtle.large {
+  background: url("webicons/webicon-svtle.png"); }
+
+.no-svg .webicon.svtle.small {
+  background: url("webicons/webicon-svtle-s.png"); }
+
+.svg .webicon.svtle {
+  background: url("webicons/webicon-svtle.svg"); }
+
 .no-svg .webicon.tent {
   background: url("webicons/webicon-tent-m.png"); }
 
