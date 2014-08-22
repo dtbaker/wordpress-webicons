@@ -1,19 +1,3 @@
-/* wordpress widget styles by dtbaker */
-
-.widget_social_icons-description br {
-    clear: both;
-}
-.widget_social_icons-description span {
-    width: 144px;
-    float: right;
-}
-.widget_social_icons-description {
-    line-height: 1.5em;
-}
-.widget_social_icons a {
-    margin: 5px;
-}
-
 /* Webicons by Adam Fairhead at Fairhead Creative http://fairheadcreative.com */
 .webicon {
   display: inline-block;
@@ -31,7 +15,7 @@
   margin-bottom: 5px; }
 
 .webicon:hover {
-  /*margin: -1px 0 1px; dtbaker */
+  margin: -1px 0 1px;
   -moz-box-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
   -webkit-box-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.25); }
@@ -181,6 +165,18 @@
 
 .svg .webicon.creativecloud {
   background: url("webicons/webicon-creativecloud.svg"); }
+
+.no-svg .webicon.deviantart {
+  background: url("webicons/webicon-deviantart-m.png"); }
+
+.no-svg .webicon.deviantart.large {
+  background: url("webicons/webicon-deviantart.png"); }
+
+.no-svg .webicon.deviantart.small {
+  background: url("webicons/webicon-deviantart-s.png"); }
+
+.svg .webicon.deviantart {
+  background: url("webicons/webicon-deviantart.svg"); }
 
 .no-svg .webicon.dribbble {
   background: url("webicons/webicon-dribbble-m.png"); }
@@ -733,6 +729,18 @@
 
 .svg .webicon.svn {
   background: url("webicons/webicon-svn.svg"); }
+
+.no-svg .webicon.svtle {
+  background: url("webicons/webicon-svtle-m.png"); }
+
+.no-svg .webicon.svtle.large {
+  background: url("webicons/webicon-svtle.png"); }
+
+.no-svg .webicon.svtle.small {
+  background: url("webicons/webicon-svtle-s.png"); }
+
+.svg .webicon.svtle {
+  background: url("webicons/webicon-svtle.svg"); }
 
 .no-svg .webicon.tent {
   background: url("webicons/webicon-tent-m.png"); }
