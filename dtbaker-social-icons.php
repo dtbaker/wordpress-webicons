@@ -4,7 +4,7 @@ Plugin Name: Social Icons by Fairhead Creative
 Plugin URI: http://dtbaker.net
 Description: Display a series of Social Icons (Facebook, YouTube, etc..) in a widget on your website.
 Author: Fairhead Creative (icons) and dtbaker (plugin)
-Version: 1.0.1
+Version: 1.0.2
 Author URI: https://github.com/adamfairhead/webicons and http://dtbaker.net
 Icons are CC-Attrib to http://fairheadcreative.com
 */

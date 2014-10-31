@@ -30,7 +30,7 @@ if ( !empty( $description ) ) {
 }
 
 echo '<!-- start webicons by http://fairheadcreative.com -->';
-echo '<p class="widget_social_icons">';
+echo '<p class="widget_social_icons widget_social_icons_size_'.$icon_size.'">';
 $enabled_icons = json_decode($enabled_icons,true);
 if(is_array($enabled_icons)){
     foreach($enabled_icons as $icon_name => $url){ ?>
