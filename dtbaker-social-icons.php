@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Social Icons by Fairhead Creative
-Plugin URI: http://dtbaker.net
+Plugin URI: https://github.com/dtbaker/wordpress-webicons/
 Description: Display a series of Social Icons (Facebook, YouTube, etc..) in a widget on your website.
 Author: Fairhead Creative (icons) and dtbaker (plugin)
-Version: 1.0.2
-Author URI: https://github.com/adamfairhead/webicons and http://dtbaker.net
+Version: 1.0.3
+Author URI: http://dtbaker.net
 Icons are CC-Attrib to http://fairheadcreative.com
 */
 
@@ -13,11 +13,6 @@ Icons are CC-Attrib to http://fairheadcreative.com
 if ( !defined('ABSPATH') )
 	die('-1');
 
-// Load the widget on widgets_init
-function dtbaker_load_social_plugins() {
-	register_widget('dtbaker_Social_Icons');
-}
-add_action('widgets_init', 'dtbaker_load_social_plugins');
 
 /**
  * Tribe_Image_Widget class
@@ -107,7 +102,7 @@ class dtbaker_Social_Icons extends WP_Widget {
 	 *
 	 * @return array default values
 	 */
-	private static function get_defaults() {
+	public static function get_defaults() {
 
 		$defaults = array(
 			'title' => 'Contact Us',
@@ -181,14 +176,161 @@ class dtbaker_Social_Icons extends WP_Widget {
 
 
 
-function dtbaker_shortcode_webicon($atts, $innercontent='', $code='') {
-    extract(shortcode_atts(array(
-        'icon' => '',
-        'title' => '',
-        'size' => 'large',
-        'link' => '',
-    ), $atts));
-    return '<a href="'.esc_attr($link).'" class="webicon '.esc_attr($icon).' '.($size != 'medium' ? $size : '').'" target="_blank" title="'.esc_attr($title).'">'.esc_attr($title).'</a>';
-}
-add_shortcode('webicon', 'dtbaker_shortcode_webicon');
+add_action( 'vc_before_init', 'dtbaker_vc_Social_Icons' );
 
+function vc_dtbaker_shortcode_icon_form_field( $settings, $value ) {
+
+    $defaults = dtbaker_Social_Icons::get_defaults();
+    $icons = isset($defaults['icons']) ? json_decode($defaults['icons'],true) : array();;
+    $enabled_icons = isset($defaults['enabled_icons']) ? json_decode($defaults['enabled_icons'],true) : array();;
+
+
+    ob_start();
+    ?>
+    <div class="social_icon_holder">
+        <div class="no-svg enabled_icons single"<?php echo !is_array($enabled_icons) || !count($enabled_icons) ? ' style="display:none;"' : '';?>>
+            <input type="hidden" name="key" value="enabled_icons" class="social_icon_prefix">
+            <label for=""><?php _e('Enabled Icons &amp; Links (click to disable):', 'social_icons'); ?>:</label>
+            <br/>
+            <div class="enabled_icons_holder">
+                <?php
+                if(is_array($enabled_icons)){
+                    foreach($enabled_icons as $icon_name => $url){ ?>
+                        <div>
+                            <a href="#" class="webicon <?php echo $icon_name;?> small" onclick="return false;"><?php echo $icon_name;?></a>
+                            <input type="text" name="enabled_icons[<?php echo $icon_name;?>]" value="<?php echo esc_attr(strip_tags($url));?>">
+                        </div>
+                    <?php }
+                } ?>
+            </div>
+        </div>
+        <div class="no-svg disabled_icons">
+            <label for=""><?php _e('Available Icons: (click to enable):', 'social_icons'); ?>:</label>
+            <br/>
+            <?php
+            if(is_array($icons)){
+                foreach($icons as $icon_name => $url){ ?>
+                    <a href="#" class="webicon <?php echo $icon_name;?> small" data-icon-name="<?php echo $icon_name;?>" title="<?php echo $icon_name;?>" onclick="return false;"><?php echo $icon_name;?></a>
+                <?php }
+            } ?>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+
+function dtbaker_vc_Social_Icons() {
+
+    //$param = 'dtbaker_shortcode_icon';
+    //vc_add_shortcode_param( $param, 'vc_' . $param . '_form_field' );
+
+    $defaults = dtbaker_Social_Icons::get_defaults();
+    $icons = isset($defaults['icons']) ? json_decode($defaults['icons'],true) : array();;
+    $enabled_icons = isset($defaults['enabled_icons']) ? json_decode($defaults['enabled_icons'],true) : array();;
+
+    foreach($icons as $icon => $name){
+        $icons[$icon] = $icon;
+    }
+    $params = array();
+    $params[] = array(
+        'type' => 'dropdown',
+        'param_name' => 'icon',
+        'holder' => 'div',
+        "class" => "",
+        "heading" => 'Choose Icon',
+        "value" => $icons,
+        "std" => '',
+        "description" => ''
+    );
+    $params[] = array(
+        'type' => 'textfield',
+        'param_name' => 'link',
+        'holder' => 'div',
+        "class" => "",
+        "heading" => 'Enter Link',
+        "value" => 'http://',
+        "std" => 'http://',
+        "description" => ''
+    );
+    $params[] = array(
+        'type' => 'dropdown',
+        'param_name' => 'size',
+        'holder' => 'div',
+        "class" => "",
+        "heading" => 'Choose Size',
+        "value" => array(
+            'Small' => 'small',
+            'Medium' => 'medium',
+            'Large' => 'large',
+        ),
+        "std" => '',
+        "description" => ''
+    );
+    /*$params[] = array(
+        'type' => 'dtbaker_shortcode_icon',
+        'param_name' => 'enabled_icons',
+        'holder' => 'div',
+        "class" => "",
+        "heading" => 'Choose Icons',
+        "value" => '',
+        "std" => '',
+        "description" => ''
+    );*/
+    vc_map( array(
+        "name" => __( "Social Icon", "dtbaker" ),
+        "base" => "webicon",
+        "class" => "",
+        "category" => __( "Content", "dtbaker"),
+        "params" => $params
+    ) );
+}
+
+
+
+class dtbaker_Shortcode_Social_Icons
+{
+    private static $instance = null;
+
+    public static function get_instance()
+    {
+        if (!self::$instance)
+            self::$instance = new self;
+        return self::$instance;
+    }
+
+    public function init()
+    {
+        // comment this 'add_action' out to disable shortcode backend mce view feature
+        add_action('admin_init', array($this, 'init_plugin'), 20);
+        add_action( 'admin_enqueue_scripts', array( $this, 'admin_setup' ) );
+        add_shortcode('webicon', array($this, 'dtbaker_shortcode_webicon'));
+        add_action('widgets_init', create_function('', 'return register_widget("dtbaker_Social_Icons");'));
+    }
+
+    function admin_setup() {
+        //wp_enqueue_media();
+        wp_enqueue_style( 'dtbaker-social-icons', plugins_url('webicons.css', __FILE__) );
+        wp_enqueue_script( 'dtbaker-social-icons-admin', plugins_url('webicons-admin.js', __FILE__) );
+    }
+
+
+    public function init_plugin()
+    {
+        // todo - copy google maps shortcode to add MCE button
+    }
+
+    function dtbaker_shortcode_webicon($atts, $innercontent = '', $code = '')
+    {
+        extract(shortcode_atts(array(
+            'icon' => '',
+            'title' => '',
+            'size' => 'large',
+            'link' => '',
+        ), $atts));
+        return '<a href="' . esc_attr($link) . '" class="webicon ' . esc_attr($icon) . ' ' . ($size != 'medium' ? $size : '') . '" target="_blank" title="' . esc_attr($title) . '">' . esc_attr($title) . '</a>';
+    }
+}
+
+
+
+dtbaker_Shortcode_Social_Icons::get_instance()->init();
