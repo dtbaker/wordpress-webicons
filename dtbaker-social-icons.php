@@ -81,6 +81,7 @@ class dtbaker_Social_Icons extends WP_Widget {
 		$new_instance = wp_parse_args( (array) $new_instance, self::get_defaults() );
 		$instance['title'] = strip_tags($new_instance['title']);
 		$instance['icon_size'] = strip_tags($new_instance['icon_size']);
+		$instance['align'] = strip_tags($new_instance['align']);
 		if ( current_user_can('unfiltered_html') ) {
 			$instance['description'] = $new_instance['description'];
 		} else {
@@ -108,6 +109,7 @@ class dtbaker_Social_Icons extends WP_Widget {
 			'title' => 'Contact Us',
 			'description' => "Phone:||1800 123 123\nFax:||1800 321 321\nAddress:||Sydney, Australia",
 			'icon_size' => 'large',
+			'align' => '',
 			'icons' => array(),
 			'enabled_icons' => array(),
 		);
@@ -254,7 +256,7 @@ function dtbaker_vc_Social_Icons() {
     );
     $params[] = array(
         'type' => 'dropdown',
-        'param_name' => 'size',
+        'param_name' => 'icon_size',
         'holder' => 'div',
         "class" => "",
         "heading" => 'Choose Size',
@@ -262,6 +264,20 @@ function dtbaker_vc_Social_Icons() {
             'Small' => 'small',
             'Medium' => 'medium',
             'Large' => 'large',
+        ),
+        "std" => '',
+        "description" => ''
+    );
+    $params[] = array(
+        'type' => 'dropdown',
+        'param_name' => 'align',
+        'holder' => 'div',
+        "class" => "",
+        "heading" => 'Alignment',
+        "value" => array(
+            'Left' => 'left',
+            'Center' => 'center',
+            'Right' => 'right',
         ),
         "std" => '',
         "description" => ''
@@ -324,10 +340,11 @@ class dtbaker_Shortcode_Social_Icons
         extract(shortcode_atts(array(
             'icon' => '',
             'title' => '',
-            'size' => 'large',
+            'icon_size' => 'large',
             'link' => '',
+            'align' => '',
         ), $atts));
-        return '<a href="' . esc_attr($link) . '" class="webicon ' . esc_attr($icon) . ' ' . ($size != 'medium' ? $size : '') . '" target="_blank" title="' . esc_attr($title) . '">' . esc_attr($title) . '</a>';
+        return '<a href="' . esc_attr($link) . '" class="webicon ' . esc_attr($icon) . ' ' . ($icon_size != 'medium' ? $icon_size : '') . (!empty($align) ? " align$align" : '') . '" target="_blank" title="' . esc_attr($title) . '">' . esc_attr($title) . '</a>';
     }
 }
 

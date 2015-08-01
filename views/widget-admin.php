@@ -27,6 +27,14 @@ if ( !defined('ABSPATH') )
             <option value="large"<?php echo $instance['icon_size'] == 'large' ? ' selected' : '';?>><?php _e('Large','social_icons');?></option>
         </select>
     </p>
+    <p>
+        <label for="<?php echo $this->get_field_id('align'); ?>"><?php _e('Icon Size', 'social_icons'); ?>:</label>
+        <select class="widefat" name="<?php echo $this->get_field_name('align'); ?>" id="<?php echo $this->get_field_id('align'); ?>">
+            <option value="small"<?php echo $instance['align'] == 'small' ? ' selected' : '';?>><?php _e('Small','social_icons');?></option>
+            <option value="medium"<?php echo $instance['align'] == 'medium' ? ' selected' : '';?>><?php _e('Medium','social_icons');?></option>
+            <option value="large"<?php echo $instance['align'] == 'large' ? ' selected' : '';?>><?php _e('Large','social_icons');?></option>
+        </select>
+    </p>
     <div class="no-svg enabled_icons"<?php echo !is_array($enabled_icons) || !count($enabled_icons) ? ' style="display:none;"' : '';?>>
         <input type="hidden" name="key" value="<?php echo $this->get_field_name('enabled_icons'); ?>" class="social_icon_prefix">
         <label for="<?php echo $this->get_field_id('enabled_icons'); ?>"><?php _e('Enabled Icons &amp; Links (click to disable)', 'social_icons'); ?>:</label>
