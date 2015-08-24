@@ -12,3 +12,4 @@ The Webicons were created by Fairhead Crative, more details about Webicons on th
 
 1.0.2 - 27 Oct 2014 - initial release
 1.0.3 - 1 Aug 2015 - added Visual Composer support
+1.0.4 - 24 Aug 2015 - fix for WP 4.3

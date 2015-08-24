@@ -4,7 +4,7 @@ Plugin Name: Social Icons by Fairhead Creative
 Plugin URI: https://github.com/dtbaker/wordpress-webicons/
 Description: Display a series of Social Icons (Facebook, YouTube, etc..) in a widget on your website.
 Author: Fairhead Creative (icons) and dtbaker (plugin)
-Version: 1.0.3
+Version: 1.0.4
 Author URI: http://dtbaker.net
 Icons are CC-Attrib to http://fairheadcreative.com
 */
@@ -22,11 +22,11 @@ class dtbaker_Social_Icons extends WP_Widget {
 	/**
 	 * Social Icons constructor
 	 */
-	function dtbaker_Social_Icons() {
+	function __construct() {
 		load_plugin_textdomain( 'social_icons', false, trailingslashit(basename(dirname(__FILE__))) . 'lang/');
 		$widget_ops = array( 'classname' => 'widget_social_icons', 'description' => __( 'Display a series of Social Icons (Facebook, YouTube, etc..)', 'social_icons' ) );
 		$control_ops = array( 'id_base' => 'widget_social_icons' );
-		$this->WP_Widget('widget_social_icons', __('Social Icons', 'social_icons'), $widget_ops, $control_ops);
+		parent::__construct('widget_social_icons', __('Social Icons', 'social_icons'), $widget_ops, $control_ops);
 
         add_action( 'sidebar_admin_setup', array( $this, 'admin_setup' ) );
         add_action( 'wp_enqueue_scripts', array($this, 'frontend_setup' ) );
